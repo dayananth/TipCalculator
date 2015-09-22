@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TipsViewController : UIViewController
+@interface TipsViewController : UIViewController{
+    NSString *currentLocale;
+}
+@property (retain) NSString *currentLocale;
 
 @end

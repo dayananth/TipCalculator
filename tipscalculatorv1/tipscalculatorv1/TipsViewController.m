@@ -22,11 +22,22 @@
 
 @implementation TipsViewController
 
+@synthesize currentLocale;
+
+//- (void) dealloc
+//{
+//    [currentLocale release];
+//    [super dealloc];
+//}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if(self){
         self.title = @"Tip Calculator";
+        self.currentLocale = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
+//        self.tipLabel.text = self.currentLocale;
+//        self.totalLabel.text = [NSString stringWithFormat:@"%@00",self.currentLocale];
     }
     
     return self;
@@ -60,6 +71,9 @@
     int minuteDiff = [components minute];
     if(minuteDiff < 10)
         return [nsUserDefaults floatForKey:@"tips_app_last_saved_bill_amount"];
+    else{
+        [nsUserDefaults setObject:Nil forKey:@"tips_app_last_saved_bill_amount"];
+    }
     return 0.00;
 
 }
@@ -67,6 +81,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(onSettingsButton)];
+    [self.billTextField becomeFirstResponder];
     
 //    [self.tipsPercentageField setSelectedSegmentIndex:[[self class] getSavedDefaultPercent]];
 //    NSLog(@"default %d", [[self class] getSavedDefaultPercent]);
@@ -85,6 +100,8 @@
         [self.billTextField setText:[NSString stringWithFormat:@"%0.2f",billAmount]];
         [self updateTipAndTotal];
     }
+//    self.tipLabel.text = [NSString stringWithFormat:@"%@%0.2f",currencySymbol,tipAmount];
+//    self.totalLabel.text = [NSString stringWithFormat:@"%@%0.2f",currencySymbol, totalAmount];
     NSLog(@"view will appear");
 }
 
@@ -131,9 +148,12 @@
     NSArray *tipPercentageArray = @[@(0.1),@(0.15),@(0.2)];
     float tipAmount = [tipPercentageArray[self.tipsPercentageField.selectedSegmentIndex] floatValue] * billAmount;
     float totalAmount = billAmount + tipAmount;
-    
-    self.tipLabel.text = [NSString stringWithFormat:@"$%0.2f",tipAmount];
-    self.totalLabel.text = [NSString stringWithFormat:@"$%0.2f",totalAmount];
+    NSString *currencySymbol = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
+    NSLog(@"Currency Symbol");
+    NSLog(self.currentLocale);
+    self.tipLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale,tipAmount];
+//    [NSString stringWithFormat:@"%@%0.2f",self.currentLocale,tipAmount];
+    self.totalLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale, totalAmount];
 }
 -(void)onSettingsButton{
     
