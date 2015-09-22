@@ -38,9 +38,7 @@
     if(self){
         self.title = @"Tip Calculator";
         self.currentLocale = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
-//        self.tipLabel.text = self.currentLocale;
-//        self.totalLabel.text = [NSString stringWithFormat:@"%@00",self.currentLocale];
-    }
+   }
     
     return self;
 }
@@ -69,7 +67,6 @@
                                     fromDate:savedDate
                                     toDate:now
                                     options:0];
-//  [gregorianCalendar release];
     int minuteDiff = [components minute];
     if(minuteDiff < 10)
         return [nsUserDefaults floatForKey:@"tips_app_last_saved_bill_amount"];
@@ -85,14 +82,10 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(onSettingsButton)];
     [self.billTextField becomeFirstResponder];
     
-//    [self.tipsPercentageField setSelectedSegmentIndex:[[self class] getSavedDefaultPercent]];
-//    NSLog(@"default %d", [[self class] getSavedDefaultPercent]);
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -102,8 +95,6 @@
         [self.billTextField setText:[NSString stringWithFormat:@"%0.2f",billAmount]];
         [self updateTipAndTotal];
     }
-//    self.tipLabel.text = [NSString stringWithFormat:@"%@%0.2f",currencySymbol,tipAmount];
-//    self.totalLabel.text = [NSString stringWithFormat:@"%@%0.2f",currencySymbol, totalAmount];
     NSLog(@"view will appear");
 }
 
@@ -156,8 +147,6 @@
     self.totalAmount = totalAmount;
     self.currentAnimatedTotal = 0.00;
     self.tipLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale,tipAmount];
-//    [NSString stringWithFormat:@"%@%0.2f",self.currentLocale,tipAmount];
-//    self.totalLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale, totalAmount];
     self.totalLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale, 0.00];
     [NSTimer scheduledTimerWithTimeInterval:0.001f target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
 }
@@ -168,13 +157,6 @@
 
 }
 
-
-//- (void)startAnimationWithLimit:(NSInteger)limit {
-//    self.limit = limit;
-//    self.timerFireCount = 0;
-//    [self.timer invalidate];        // stop timer if one is running already
-//    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.5f target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
-//}
 
 - (void)timerFired:(NSTimer *)timer {
     float currentTotal = self.currentAnimatedTotal;//[self.totalLabel.text floatValue];
@@ -189,14 +171,6 @@
         self.totalLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale, totalAmount];
         [timer invalidate];
     }
-    
-//    self.timerFireCount++;
-//    self.label.text = [NSString stringWithFormat:@"%i", self.timerFireCount];
-//    if (self.timerFireCount > self.limit) {
-//        [timer invalidate];
-//        self.timer = nil;
-//        self.label.text = @"Press start";
-//    }
 }
 
 
