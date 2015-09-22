@@ -23,6 +23,8 @@
 @implementation TipsViewController
 
 @synthesize currentLocale;
+@synthesize totalAmount;
+@synthesize currentAnimatedTotal;
 
 //- (void) dealloc
 //{
@@ -151,9 +153,13 @@
     NSString *currencySymbol = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
     NSLog(@"Currency Symbol");
     NSLog(self.currentLocale);
+    self.totalAmount = totalAmount;
+    self.currentAnimatedTotal = 0.00;
     self.tipLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale,tipAmount];
 //    [NSString stringWithFormat:@"%@%0.2f",self.currentLocale,tipAmount];
-    self.totalLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale, totalAmount];
+//    self.totalLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale, totalAmount];
+    self.totalLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale, 0.00];
+    [NSTimer scheduledTimerWithTimeInterval:0.001f target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
 }
 -(void)onSettingsButton{
     
@@ -161,6 +167,37 @@
     [self.navigationController pushViewController:[[SettingsViewController alloc] init] animated:YES];
 
 }
+
+
+//- (void)startAnimationWithLimit:(NSInteger)limit {
+//    self.limit = limit;
+//    self.timerFireCount = 0;
+//    [self.timer invalidate];        // stop timer if one is running already
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.5f target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+//}
+
+- (void)timerFired:(NSTimer *)timer {
+    float currentTotal = self.currentAnimatedTotal;//[self.totalLabel.text floatValue];
+    float finalTotal = self.totalAmount;
     
+    if(currentTotal + 10.00 < totalAmount){
+        self.totalLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale, currentTotal + 10.00];
+        self.currentAnimatedTotal = currentTotal + 10.00;
+        NSLog(self.totalLabel.text);
+    }
+    else{
+        self.totalLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale, totalAmount];
+        [timer invalidate];
+    }
+    
+//    self.timerFireCount++;
+//    self.label.text = [NSString stringWithFormat:@"%i", self.timerFireCount];
+//    if (self.timerFireCount > self.limit) {
+//        [timer invalidate];
+//        self.timer = nil;
+//        self.label.text = @"Press start";
+//    }
+}
+
 
 @end

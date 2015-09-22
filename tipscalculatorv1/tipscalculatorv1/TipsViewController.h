@@ -10,7 +10,11 @@
 
 @interface TipsViewController : UIViewController{
     NSString *currentLocale;
+    float totalAmount;
+    float currentAnimatedTotal;
 }
 @property (retain) NSString *currentLocale;
+@property  float totalAmount;
+@property  float currentAnimatedTotal;
 
 @end
