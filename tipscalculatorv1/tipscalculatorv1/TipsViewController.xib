@@ -71,7 +71,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNl-rJ-IIV">
-                    <rect key="frame" x="155" y="264" width="129" height="33"/>
+                    <rect key="frame" x="155" y="264" width="143" height="33"/>
                     <attributedString key="attributedText">
                         <fragment content="--:--">
                             <attributes>
