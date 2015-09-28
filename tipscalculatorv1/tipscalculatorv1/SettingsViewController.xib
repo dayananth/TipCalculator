@@ -22,19 +22,20 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="qG8-qN-28Q">
-                    <rect key="frame" x="121" y="182" width="190" height="29"/>
+                    <rect key="frame" x="131" y="182" width="190" height="29"/>
                     <color key="backgroundColor" red="0.99461274110563458" green="1" blue="0.97794663437764429" alpha="1" colorSpace="calibratedRGB"/>
                     <segments>
                         <segment title="10%"/>
                         <segment title="15%"/>
                         <segment title="20%"/>
                     </segments>
+                    <color key="tintColor" red="0.0079515220732758254" green="0.0080237673548338752" blue="0.008152173913043459" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="onDefaultTipChange:" destination="-1" eventType="valueChanged" id="YfR-dc-dg2"/>
                     </connections>
                 </segmentedControl>
             </subviews>
-            <color key="backgroundColor" red="0.52283758182391848" green="0.8216340963158989" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.97538670765517022" green="0.98424879552629108" blue="1" alpha="1" colorSpace="calibratedRGB"/>
         </view>
     </objects>
 </document>

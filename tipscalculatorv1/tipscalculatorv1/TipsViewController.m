@@ -17,6 +17,8 @@
 - (IBAction)onTap:(id)sender;
 - (void)updateTipAndTotal;
 - (void)onSettingsButton;
+- (void)labelTap:(UITapGestureRecognizer *)tapGesture;
+@property (weak, nonatomic) IBOutlet UIScrollView *tipsScroller;
 
 @end
 
@@ -38,6 +40,11 @@
     if(self){
         self.title = @"Tip Calculator";
         self.currentLocale = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
+        [self.tipsScroller setBackgroundColor:[UIColor blackColor]];
+        [self.tipsScroller setCanCancelContentTouches:NO];
+        self.tipsScroller.indicatorStyle = UIScrollViewIndicatorStyleWhite;
+        self.tipsScroller.clipsToBounds = YES; // default is NO, we want to restrict drawing within our scrollview
+        self.tipsScroller.scrollEnabled = YES;
    }
     
     return self;
@@ -95,6 +102,17 @@
         [self.billTextField setText:[NSString stringWithFormat:@"%0.2f",billAmount]];
         [self updateTipAndTotal];
     }
+
+    UILabel *one = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    UILabel *two = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, 200, 30)];
+    UILabel *three = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, 200, 30)];
+
+    [self.tipsScroller addSubview:one];
+//    UILabel *one = [[UILabel alloc]init];
+
+    [self.tipsScroller addSubview:two];
+    [self.tipsScroller addSubview:three];
+
     NSLog(@"view will appear");
 }
 
@@ -149,6 +167,28 @@
     self.tipLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale,tipAmount];
     self.totalLabel.text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale, 0.00];
     [NSTimer scheduledTimerWithTimeInterval:0.001f target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+
+    NSArray *subviews = [self.tipsScroller subviews];
+
+    UILabel *one = (UILabel *) subviews[0];
+    one.tag = 1;
+    one.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelTap:)];
+    [one addGestureRecognizer:tapGesture];
+
+    float b = billAmount * 0.1;
+    int i = 0;
+    for (UILabel *uiLabel in subviews){
+        if(i<3){
+            float tipVal = [tipPercentageArray[i] floatValue] * billAmount;
+            int tipPct = (int)([tipPercentageArray[i] floatValue] * 100);
+            uiLabel.text = [NSString localizedStringWithFormat:@"%Tip @ %d %%  %@ %.2f", tipPct, self.currentLocale, tipVal];
+            i++;
+        }
+    }
+
+//    ((UILabel *)subviews[0]).text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale, b ];
+
 }
 -(void)onSettingsButton{
     
@@ -157,6 +197,10 @@
 
 }
 
+-(void)labelTap:(UITapGestureRecognizer *)tapGesture{
+//    NSLog(sender);
+    NSLog(@"label Tapped");
+}
 
 - (void)timerFired:(NSTimer *)timer {
     float currentTotal = self.currentAnimatedTotal;//[self.totalLabel.text floatValue];
@@ -172,6 +216,8 @@
         [timer invalidate];
     }
 }
+
+
 
 
 @end
