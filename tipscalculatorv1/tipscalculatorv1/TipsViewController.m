@@ -170,22 +170,22 @@
 
     NSArray *subviews = [self.tipsScroller subviews];
 
-    UILabel *one = (UILabel *) subviews[0];
-    one.tag = 1;
-    one.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelTap:)];
-    [one addGestureRecognizer:tapGesture];
+//    UILabel *one = (UILabel *) subviews[0];
+//    one.tag = 1;
+//    one.userInteractionEnabled = YES;
+//    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelTap:)];
+//    [one addGestureRecognizer:tapGesture];
 
     float b = billAmount * 0.1;
     int i = 0;
-    for (UILabel *uiLabel in subviews){
-        if(i<3){
-            float tipVal = [tipPercentageArray[i] floatValue] * billAmount;
-            int tipPct = (int)([tipPercentageArray[i] floatValue] * 100);
-            uiLabel.text = [NSString localizedStringWithFormat:@"%Tip @ %d %%  %@ %.2f", tipPct, self.currentLocale, tipVal];
-            i++;
-        }
-    }
+//    for (UILabel *uiLabel in subviews){
+//        if(i<3){
+//            float tipVal = [tipPercentageArray[i] floatValue] * billAmount;
+//            int tipPct = (int)([tipPercentageArray[i] floatValue] * 100);
+//            uiLabel.text = [NSString localizedStringWithFormat:@"%Tip @ %d %%  %@ %.2f", tipPct, self.currentLocale, tipVal];
+//            i++;
+//        }
+//    }
 
 //    ((UILabel *)subviews[0]).text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale, b ];
 
