@@ -2,7 +2,7 @@
 
 This is a Tip Calculator application for iOS submitted as the [pre-assignment](https://github.com/dayananth/TipCalculator) requirement for CodePath.
 
-Time spent: 11hrs
+Time spent: 13hrs
 
 Completed:
 
