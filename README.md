@@ -13,7 +13,9 @@ Completed:
 * [] Optional: Using locale-specific currency and currency thousands separators.
 * [] Optional: Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 
-![Video Walkthrough - v1](demo_v1.gif)
+![Video Walkthrough - v2](demo_v2.gif)
+
+![Previous version - v1](demo_v1.gif)
 
 ![Previous version V0](demo.gif)
 
