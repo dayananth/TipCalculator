@@ -17,7 +17,7 @@
 - (IBAction)onTap:(id)sender;
 - (void)updateTipAndTotal;
 - (void)onSettingsButton;
-- (void)labelTap:(UITapGestureRecognizer *)tapGesture;
+-(void)buttonClick:(id)target;
 @property (weak, nonatomic) IBOutlet UIScrollView *tipsScroller;
 
 @end
@@ -88,6 +88,28 @@
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(onSettingsButton)];
     [self.billTextField becomeFirstResponder];
+    UIButton *one = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    [one setTag:0];
+    UIButton *two = [[UIButton alloc] initWithFrame:CGRectMake(0, 35, 200, 30)];
+    [two setTag:1];
+    two.backgroundColor = [UIColor redColor];
+    UIButton *three = [[UIButton alloc] initWithFrame:CGRectMake(0, 70, 200, 30)];
+    [three  setTag:2];
+    three.backgroundColor = [UIColor redColor];
+
+    [self.tipsScroller addSubview:one];
+    [self.tipsScroller addSubview:two];
+    [self.tipsScroller addSubview:three];
+
+    NSArray *subviews = [self.tipsScroller subviews];
+
+    for(UIButton *uiButton in subviews){
+        [uiButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+        uiButton.backgroundColor = [UIColor whiteColor];
+        [uiButton.layer setBorderWidth:3.0];
+        [uiButton.layer setBorderColor:[[UIColor blackColor] CGColor]];
+    }
+
     
 }
 
@@ -103,15 +125,7 @@
         [self updateTipAndTotal];
     }
 
-    UILabel *one = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
-    UILabel *two = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, 200, 30)];
-    UILabel *three = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, 200, 30)];
 
-    [self.tipsScroller addSubview:one];
-//    UILabel *one = [[UILabel alloc]init];
-
-    [self.tipsScroller addSubview:two];
-    [self.tipsScroller addSubview:three];
 
     NSLog(@"view will appear");
 }
@@ -130,7 +144,6 @@
     [nsUserDefaults setFloat:[self.billTextField.text floatValue] forKey:@"tips_app_last_saved_bill_amount"];
     
     [nsUserDefaults synchronize];
-//    NSLog([nsUserDefaults objectForKey:@"tips_app_last_saved_date"]);
     
     NSLog(@"view will disappear");
 }
@@ -170,24 +183,19 @@
 
     NSArray *subviews = [self.tipsScroller subviews];
 
-//    UILabel *one = (UILabel *) subviews[0];
-//    one.tag = 1;
-//    one.userInteractionEnabled = YES;
-//    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelTap:)];
-//    [one addGestureRecognizer:tapGesture];
-
     float b = billAmount * 0.1;
     int i = 0;
-//    for (UILabel *uiLabel in subviews){
-//        if(i<3){
-//            float tipVal = [tipPercentageArray[i] floatValue] * billAmount;
-//            int tipPct = (int)([tipPercentageArray[i] floatValue] * 100);
-//            uiLabel.text = [NSString localizedStringWithFormat:@"%Tip @ %d %%  %@ %.2f", tipPct, self.currentLocale, tipVal];
-//            i++;
-//        }
-//    }
+    for (UIButton *uiButton in subviews){
+        if(i<3){
+            float tipVal = [tipPercentageArray[i] floatValue] * billAmount;
+            int tipPct = (int)([tipPercentageArray[i] floatValue] * 100);
+            NSString *amnt = [NSString localizedStringWithFormat:@"Tip @ %d %%  %@ %.2f", tipPct, self.currentLocale, tipVal];
 
-//    ((UILabel *)subviews[0]).text = [NSString localizedStringWithFormat:@"%@ %.2f", self.currentLocale, b ];
+            [uiButton setTitle:amnt forState: UIControlStateNormal];
+            [uiButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            i++;
+        }
+    }
 
 }
 -(void)onSettingsButton{
@@ -197,13 +205,16 @@
 
 }
 
--(void)labelTap:(UITapGestureRecognizer *)tapGesture{
-//    NSLog(sender);
+-(void)buttonClick:(id)target{
+    UIButton *uiButton = (UIButton *) target;
+    int tag = [target tag];
+    [self.tipsPercentageField setSelectedSegmentIndex: tag];
+    [self updateTipAndTotal];
     NSLog(@"label Tapped");
 }
 
 - (void)timerFired:(NSTimer *)timer {
-    float currentTotal = self.currentAnimatedTotal;//[self.totalLabel.text floatValue];
+    float currentTotal = self.currentAnimatedTotal;
     float finalTotal = self.totalAmount;
     
     if(currentTotal + 10.00 < totalAmount){
